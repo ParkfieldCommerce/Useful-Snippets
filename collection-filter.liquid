@@ -19,9 +19,9 @@
       {% assign categories = categories | append: categoryCheck %}
       {% assign lastCategory = categoryCheck %}
     {% endunless %}
-    <li class="CollectionFilter__filter-value-container">
+    <li class="CollectionFilter__filter-value-container {% if current_tags contains tag %}active{% endif %}">
       <label class="CollectionFilter__filter-value-label" for="{{tag}}">{{tag}}</label>
-      <input class="CollectionFilter__filter-value" id="{{tag}}" type="radio" name="{{categoryCheck}}" value="{{tag}}">
+      <input {% if current_tags contains tag %}checked{% endif %} class="CollectionFilter__filter-value" id="{{tag}}" type="radio" name="{{categoryCheck}}" value="{{tag}}">
     </li>
   {% endif %}
 
