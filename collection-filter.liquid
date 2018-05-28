@@ -1,0 +1,34 @@
+{% assign categories = '' %}
+{% assign categories = categories | split: '' %}
+{% assign lastCategory = '' %}
+<ul class="CollectionFilter">
+{% for tag in collection.all_tags offset: 15 %}
+  
+  {% if tag contains '_' %}
+    {% assign categoryCheck = tag | split:'_' | first %}
+    {% unless categories contains categoryCheck %}
+      {% if lastCategory != '' and lastCategory != categoryCheck %}
+        </ul>
+        </li>
+      {% endif %}
+      {% if lastCategory != categoryCheck %}
+        <li class="CollectionFilter__category">
+          <button class="CollectionFilter__dropdown-trigger">{{categoryCheck}}</button>
+          <ul class="CollectionFilter__dropdown">
+      {% endif %}
+      {% assign categories = categories | append: categoryCheck %}
+      {% assign lastCategory = categoryCheck %}
+    {% endunless %}
+    <li class="CollectionFilter__filter-value-container">
+      <label class="CollectionFilter__filter-value-label" for="{{tag}}">{{tag}}</label>
+      <input class="CollectionFilter__filter-value" id="{{tag}}" type="radio" name="{{categoryCheck}}" value="{{tag}}">
+    </li>
+  {% endif %}
+
+  {% if forloop.last %}
+  </ul>
+  </li>
+  {% endif %}
+
+{% endfor %}
+</ul>
