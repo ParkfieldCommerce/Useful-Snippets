@@ -21,7 +21,7 @@
     {% endunless %}
     <li class="CollectionFilter__filter-value-container {% if current_tags contains tag %}active{% endif %}">
       <label class="CollectionFilter__filter-value-label" for="{{tag}}">{{tag}}</label>
-      <input {% if current_tags contains tag %}checked{% endif %} class="CollectionFilter__filter-value" id="{{tag}}" type="radio" name="{{categoryCheck}}" value="{{tag}}">
+      <input {% if current_tags contains tag %}checked{% endif %} class="CollectionFilter__filter-value js-filterValue" id="{{tag}}" type="radio" name="{{categoryCheck}}" value="{{tag | handleize}}">
     </li>
   {% endif %}
 
@@ -32,3 +32,24 @@
 
 {% endfor %}
 </ul>
+
+<script>
+  $('.js-filterValue').change(function(){
+    var rootUrl = '{{shop.url}}'+'{{collection.url}}';
+    if('{{collection.url}}' == ''){
+      rootUrl = '{{shop.url}}'+'/collections/all'
+    }
+    var urlSegment = '';
+    $(".js-filterValue:checked").each(function() {
+      if(this.checked){
+        if(urlSegment == ''){
+          urlSegment+='/'+this.value;
+        }else{
+          urlSegment+='+'+this.value;
+        }
+      }
+    });
+
+    window.location = rootUrl+urlSegment;
+  })
+</script>
