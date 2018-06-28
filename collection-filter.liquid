@@ -2,7 +2,7 @@
 {% assign categories = categories | split: '' %}
 {% assign lastCategory = '' %}
 <ul class="CollectionFilter">
-{% for tag in collection.all_tags offset: 15 %}
+{% for tag in collection.all_tags %}
   
   {% if tag contains '_' %}
     {% assign categoryCheck = tag | split:'_' | first %}
